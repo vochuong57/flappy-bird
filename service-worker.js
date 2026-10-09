@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flappy-bird-offline-v1';
+const CACHE_NAME = 'flappy-bird-offline-v2';
 const APP_FILES = [
     './',
     './index.html',
