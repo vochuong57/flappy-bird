@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover' />
+    <meta charset='utf-8'>
+    <meta name="theme-color" content="#283538">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Flappy Bird">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <style></style>
+    <title>flappy bird</title>
+    <script src="playcanvas-stable.min.js"></script>
+    <script src="__settings__.js"></script>
+</head>
+<body>
+    <script src="__start__.js"></script>
+    <script src="__loading__.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js');
+            });
+        }
+    </script>
+</body>
+</html>

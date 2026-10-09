@@ -1,0 +1,18 @@
+{
+	"id": "./",
+	"short_name": "Flappy Bird",
+	"name": "Flappy Bird",
+	"start_url": "./",
+	"scope": "./",
+	"display": "standalone",
+	"background_color": "#283538",
+	"theme_color": "#283538",
+	"icons": [
+		{
+			"src": "app-icon.svg",
+			"sizes": "any",
+			"type": "image/svg+xml",
+			"purpose": "any maskable"
+		}
+	]
+}
