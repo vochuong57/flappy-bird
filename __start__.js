@@ -281,6 +281,13 @@
 
             var translateLocal = entity.translateLocal;
             var preciseWorldX = entity.getPosition().x;
+            var setPosition = entity.setPosition;
+            entity.setPosition = function () {
+                var result = setPosition.apply(this, arguments);
+                preciseWorldX = this.getPosition().x;
+                return result;
+            };
+
             entity.translateLocal = function (x, y, z) {
                 var previousWorldX = this.getPosition().x;
                 translateLocal.call(this, x, y, z);
@@ -292,7 +299,7 @@
                 var screenX = (preciseWorldX - cameraPosition.x) * pixelsPerUnit + canvas.width / 2;
                 var snappedX = cameraPosition.x + (Math.round(screenX) - canvas.width / 2) / pixelsPerUnit;
 
-                this.setPosition(snappedX, worldPosition.y, worldPosition.z);
+                setPosition.call(this, snappedX, worldPosition.y, worldPosition.z);
                 return this;
             };
         });
