@@ -267,6 +267,37 @@
         }
     }
 
+    function snapScrollingEntitiesToPixelGrid() {
+        var cameraEntity = app.root.findByName('Camera');
+        if (!cameraEntity || !cameraEntity.camera) {
+            return;
+        }
+
+        ['Pipes', 'Ground'].forEach(function (name) {
+            var entity = app.root.findByName(name);
+            if (!entity) {
+                return;
+            }
+
+            var translateLocal = entity.translateLocal;
+            var preciseWorldX = entity.getPosition().x;
+            entity.translateLocal = function (x, y, z) {
+                var previousWorldX = this.getPosition().x;
+                translateLocal.call(this, x, y, z);
+
+                var cameraPosition = cameraEntity.getPosition();
+                var worldPosition = this.getPosition();
+                preciseWorldX += worldPosition.x - previousWorldX;
+                var pixelsPerUnit = canvas.height / (cameraEntity.camera.orthoHeight * 2);
+                var screenX = (preciseWorldX - cameraPosition.x) * pixelsPerUnit + canvas.width / 2;
+                var snappedX = cameraPosition.x + (Math.round(screenX) - canvas.width / 2) / pixelsPerUnit;
+
+                this.setPosition(snappedX, worldPosition.y, worldPosition.z);
+                return this;
+            };
+        });
+    }
+
     function configure() {
         app.configure(window.CONFIG_FILENAME, (err) => {
             if (err) {
@@ -298,6 +329,7 @@
                             return;
                         }
 
+                        snapScrollingEntitiesToPixelGrid();
                         app.start();
                     })
                 })
