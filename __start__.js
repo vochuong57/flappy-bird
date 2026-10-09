@@ -303,6 +303,28 @@
                 return this;
             };
         });
+
+        app.on('pipes:reset', function () {
+            setTimeout(function () {
+                var pipesEntity = app.root.findByName('Pipes');
+                var pipeHeight = pipesEntity && pipesEntity.script && pipesEntity.script.pipeHeight;
+                if (pipeHeight) {
+                    pipeHeight.heights = [
+                        0.8 * (Math.random() - 0.5) + 0.1,
+                        0.8 * (Math.random() - 0.5) + 0.1,
+                        0.8 * (Math.random() - 0.5) + 0.1
+                    ];
+                    pipeHeight.setPipeHeights();
+                }
+
+                ['Pipe 1', 'Pipe 2'].forEach(function (name) {
+                    var pipe = app.root.findByName(name);
+                    if (pipe && pipe.script && pipe.script.addToScore) {
+                        pipe.script.addToScore.lastX = pipe.getPosition().x;
+                    }
+                });
+            }, 0);
+        });
     }
 
     function configure() {
